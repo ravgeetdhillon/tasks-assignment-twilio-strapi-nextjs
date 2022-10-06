@@ -1,0 +1,34 @@
+{
+  "name": "backend",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "dev-http": "strapi develop",
+    "dev": "npm run dev-http & local-ssl-proxy --key .cert/key.pem --cert .cert/cert.pem --source 1337 --target 1338",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "devDependencies": {
+    "local-ssl-proxy": "^1.3.0"
+  },
+  "dependencies": {
+    "@strapi/plugin-i18n": "4.3.9",
+    "@strapi/plugin-users-permissions": "4.3.9",
+    "@strapi/strapi": "4.3.9",
+    "better-sqlite3": "7.4.6",
+    "twilio": "^3.82.1"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "d76846a9-897b-487e-9e5e-8f0513a7826c"
+  },
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
