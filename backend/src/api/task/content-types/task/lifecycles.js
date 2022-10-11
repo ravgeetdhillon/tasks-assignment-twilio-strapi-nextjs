@@ -1,4 +1,17 @@
 module.exports = {
+  // Send assigned message
+  async afterCreate(event) {
+    const { result } = event;
+
+    if (result.user && result.user.phoneNumber) {
+      const body = `You have been assigned a new task - "${result.title}" which is due on ${result.dueDate}.`;
+      strapi.service("api::task.whatsapp").sendWhatsappMessage({
+        to: result.user.phoneNumber,
+        body,
+      });
+    }
+  },
+
   // Send unassign message
   async beforeUpdate(event) {
     const { params } = event;
@@ -11,7 +24,11 @@ module.exports = {
       }
     );
 
-    if (entry.user && entry.user.id !== params.data.user) {
+    if (
+      entry.user &&
+      result.user.phoneNumber &&
+      entry.user.id !== params.data.user
+    ) {
       const body = `You have been unassigned from task - "${entry.title}".`;
       strapi.service("api::task.whatsapp").sendWhatsappMessage({
         to: entry.user.phoneNumber,
@@ -24,7 +41,7 @@ module.exports = {
   afterUpdate(event) {
     const { result } = event;
 
-    if (result.user) {
+    if (result.user && result.user.phoneNumber) {
       const body = `You have been assigned a new task - "${result.title}" which is due on ${result.dueDate}.`;
       strapi.service("api::task.whatsapp").sendWhatsappMessage({
         to: result.user.phoneNumber,
